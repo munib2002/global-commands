@@ -48,6 +48,11 @@ if (argv.showHelp) {
             type: 'String',
             required: false,
             description: 'sets the extension of the new renamed files, the default will be the existing one'
+        },
+        '--contains': {
+            type: 'String',
+            required: false,
+            description: 'only renames the files that includes that specific word or characters (case sensitive)'
         }
     });
 }
@@ -62,6 +67,7 @@ argv.fileName = argv.fileName || `${dirPath.split('\\').pop()} -- ep`;
 let files = fs.readdirSync(dirPath) || []; 
 
 if (argv.singleExt) files = files.filter(c => c.match(/\./g).length == 1);
+if (argv.contains) files = files.filter(c => new RegExp(argv.contains, 'g').test(c));
 
 const customSort = (arr = files) => [...arr].sort((a, b) => +a.match(/\d+(?=\D*\..+)/)?.join() - +b.match(/\d+(?=\D*\..+)/)?.join());
 
