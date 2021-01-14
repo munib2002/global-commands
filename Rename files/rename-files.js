@@ -136,6 +136,11 @@ const rl = readline.createInterface({
 	output: process.stdout,
 });
 
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout,
+});
+
 rl.question(chalk.bold.hex('#F8EFBA')("Input 'y' to rename in the above order: "), ans => {
 	if (ans != 'y') {
 		console.log(files);
