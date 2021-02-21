@@ -70,7 +70,7 @@ if (argv.showHelp || Object.keys(argv).length < 3) {
 			required: false,
 			description: 'only renames the files up to the specified index',
 		},
-		fromFile: {
+		'--fromFile': {
 			type: 'String',
 			required: false,
 			description: 'Renames the files in a folder in the order of the selected txt file in that folder',
@@ -93,6 +93,7 @@ argv.fileName = argv.fileName || `${dirPath.split('\\').pop()} -- ep`;
 // fse.copySync(dirPath, path.join(dirPath, `..\\${dirPath.split('\\').pop()} old`));
 let files = fs.readdirSync(dirPath) || [];
 let txtFile = files.find(c => /^.*\.txt$/.test(c));
+if (argv.fromFile && !txtFile) return console.log(chalk.white.bgRed('No txt file found!'));
 if (argv.fromFile) console.log(txtFile);
 if (argv.singleExt) files = files.filter(c => c.match(/\./g).length == 1);
 if (argv.contains) files = files.filter(c => new RegExp(argv.contains, 'g').test(c));
